@@ -578,6 +578,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                             }
                         }
                     }).start();
+                    mRecentsContainer.removeAllViewsInLayout();
                 }
             });
         }

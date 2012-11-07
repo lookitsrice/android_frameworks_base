@@ -27,20 +27,19 @@ import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
 import static android.view.WindowManager.LayoutParams.FLAG_SPLIT_TOUCH;
 
-import com.android.internal.view.RootViewSurfaceTaker;
-import com.android.internal.view.StandaloneActionMode;
-import com.android.internal.view.menu.ContextMenuBuilder;
-import com.android.internal.view.menu.IconMenuPresenter;
-import com.android.internal.view.menu.ListMenuPresenter;
-import com.android.internal.view.menu.MenuBuilder;
-import com.android.internal.view.menu.MenuDialogHelper;
-import com.android.internal.view.menu.MenuPresenter;
-import com.android.internal.view.menu.MenuView;
-import com.android.internal.widget.ActionBarContainer;
-import com.android.internal.widget.ActionBarContextView;
-import com.android.internal.widget.ActionBarView;
+import java.lang.ref.WeakReference;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.app.ActivityManager.RunningAppProcessInfo;
+import android.app.ActivityManagerNative;
+import android.app.IActivityManager;
 import android.app.KeyguardManager;
+<<<<<<< HEAD
+=======
+import android.content.ActivityNotFoundException;
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -48,6 +47,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+<<<<<<< HEAD
+=======
+import android.content.pm.ResolveInfo;
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
@@ -67,6 +70,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.provider.Settings;
@@ -109,8 +113,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
+import com.android.internal.statusbar.IStatusBarService;
+import com.android.internal.view.RootViewSurfaceTaker;
+import com.android.internal.view.StandaloneActionMode;
+import com.android.internal.view.menu.ContextMenuBuilder;
+import com.android.internal.view.menu.IconMenuPresenter;
+import com.android.internal.view.menu.ListMenuPresenter;
+import com.android.internal.view.menu.MenuBuilder;
+import com.android.internal.view.menu.MenuDialogHelper;
+import com.android.internal.view.menu.MenuPresenter;
+import com.android.internal.view.menu.MenuView;
+import com.android.internal.widget.ActionBarContainer;
+import com.android.internal.widget.ActionBarContextView;
+import com.android.internal.widget.ActionBarView;
+
+import com.android.internal.R;
 
 import com.android.internal.statusbar.IStatusBarService;
 
@@ -223,11 +240,16 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.ENABLE_STYLUS_GESTURES), false,
                     this);
+<<<<<<< HEAD
             checkGestures();
+=======
+            updateSettings();
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
         }
 
         @Override
         public void onChange(boolean selfChange) {
+<<<<<<< HEAD
             checkGestures();
         }
 
@@ -235,6 +257,15 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             mEnableGestures = Settings.System.getInt(
                     mContext.getContentResolver(),
                     Settings.System.ENABLE_STYLUS_GESTURES, 0) == 1;
+=======
+            updateSettings();
+        }
+
+        void updateSettings() {
+            mEnableGestures = Settings.System.getBoolean(
+                    mContext.getContentResolver(),
+                    Settings.System.ENABLE_STYLUS_GESTURES, false);
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
         }
     }
 
@@ -1929,6 +1960,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             private final static int SWIPE_RIGHT = 4;
             private final static int PRESS_LONG = 5;
             private final static int TAP_DOUBLE = 6;
+<<<<<<< HEAD
             private final static double SWIPE_MIN_DISTANCE = 25.0;
             private final static double SWIPE_MIN_VELOCITY = 50.0;
             private final static int KEY_NO_ACTION = 1000;
@@ -1938,6 +1970,19 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             private final static int KEY_SEARCH = 1004;
             private final static int KEY_RECENT = 1005;
             private final static int KEY_APP = 1006;
+=======
+            private final static int SWIPE_MIN_DISTANCE = 50;
+            private final static int SWIPE_MIN_VELOCITY = 100;
+            final static String ACTION_HOME = "**home**";
+            final static String ACTION_BACK = "**back**";
+            final static String ACTION_SEARCH = "**search**";
+            final static String ACTION_MENU = "**menu**";
+            final static String ACTION_NOTIFICATIONS = "**notifications**";
+            final static String ACTION_RECENTS = "**recents**";
+            final static String ACTION_IME = "**ime**";
+            final static String ACTION_NULL = "**null**";
+         // final static String ACTION_WIDGETS = "**widgets**";
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
             private GestureDetector mDetector;
             private final static String TAG = "StylusGestureFilter";
 
@@ -1960,6 +2005,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                 velocityY = Math.abs(velocityY);
                 boolean result = false;
 
+<<<<<<< HEAD
                 if (velocityX > (SWIPE_MIN_VELOCITY * getResources().getDisplayMetrics().density)
                         && xDistance > (SWIPE_MIN_DISTANCE * getResources().getDisplayMetrics().density)
                         && xDistance > yDistance) {
@@ -1980,6 +2026,28 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                     } else {
                         // Swipe Down
                         dispatchStylusAction(SWIPE_DOWN);
+=======
+                if (velocityX > SWIPE_MIN_VELOCITY
+                        && xDistance > SWIPE_MIN_DISTANCE
+                        && xDistance > yDistance) {
+                    if (e1.getX() > e2.getX()) { // right to left
+                        // Swipe Left
+                        launchStylusAction(SWIPE_LEFT);
+                    } else {
+                        // Swipe Right
+                        launchStylusAction(SWIPE_RIGHT);
+                    }
+                    result = true;
+                } else if (velocityY > SWIPE_MIN_VELOCITY
+                        && yDistance > SWIPE_MIN_DISTANCE
+                        && yDistance > xDistance) {
+                    if (e1.getY() > e2.getY()) { // bottom to up
+                        // Swipe Up
+                        launchStylusAction(SWIPE_UP);
+                    } else {
+                        // Swipe Down
+                        launchStylusAction(SWIPE_DOWN);
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
                     }
                     result = true;
                 }
@@ -1988,16 +2056,25 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
 
             @Override
             public boolean onDoubleTap(MotionEvent arg0) {
+<<<<<<< HEAD
                 dispatchStylusAction(TAP_DOUBLE);
+=======
+                launchStylusAction(TAP_DOUBLE);
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
                 return true;
             }
 
             public void onLongPress(MotionEvent e) {
+<<<<<<< HEAD
                 dispatchStylusAction(PRESS_LONG);
+=======
+                launchStylusAction(PRESS_LONG);
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
             }
 
         }
 
+<<<<<<< HEAD
         private void menuAction() {
             dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,
                     KeyEvent.KEYCODE_MENU));
@@ -2014,6 +2091,9 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         }
 
         private void dispatchStylusAction(int gestureAction) {
+=======
+        private void launchStylusAction(int gestureAction) {
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
             final ContentResolver resolver = mContext.getContentResolver();
             boolean flag = false;
             //flag=true when action is performed on systemui
@@ -2021,8 +2101,13 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                     .getPackageName())) {
                 flag = true;
             }
+<<<<<<< HEAD
             String packageName = null;
             int dispatchAction = -1;
+=======
+
+            String packageName = null;
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
             switch (gestureAction) {
             case StylusGestureFilter.SWIPE_LEFT:
                 packageName = Settings.System.getString(resolver,
@@ -2049,6 +2134,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                         Settings.System.GESTURES_LONG_PRESS);
                 break;
             }
+<<<<<<< HEAD
             if (packageName != null) {
                 if (String.valueOf(StylusGestureFilter.KEY_HOME)
                         .equalsIgnoreCase(packageName)) {
@@ -2086,19 +2172,60 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                 backAction();
                 break;
             case StylusGestureFilter.KEY_MENU:
+=======
+
+
+
+
+            if (packageName.equals(StylusGestureFilter.ACTION_NULL)) {
+                // who would set a button with no ClickAction?
+                // Stranger things have happened.
+                return;
+
+            } else if (packageName.equals(StylusGestureFilter.ACTION_RECENTS)) {
+                IStatusBarService mStatusBarService = IStatusBarService.Stub
+                        .asInterface(ServiceManager.getService("statusbar"));
+                try {
+                    mStatusBarService.toggleRecentApps();
+                } catch (RemoteException e) {
+                }
+                return;
+
+            } else if (packageName.equals(StylusGestureFilter.ACTION_BACK)) {
+                backAction();
+                return;
+
+            } else if (packageName.equals(StylusGestureFilter.ACTION_MENU)) {
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
                 // Menu action on notificationbar / systemui will be converted
                 // to back action
                 if (flag) {
                     backAction();
+<<<<<<< HEAD
                     break;
                 }
                 menuAction();
                 break;
             case StylusGestureFilter.KEY_SEARCH:
+=======
+                }
+                menuAction();
+                return;
+
+            } else if (packageName.equals(StylusGestureFilter.ACTION_HOME)) {
+                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                homeIntent.addCategory(Intent.CATEGORY_HOME);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(homeIntent);
+                return;
+
+            } else if (packageName.equals(StylusGestureFilter.ACTION_SEARCH)) {
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
                 // Search action on notificationbar / systemui will be converted
                 // to back action
                 if (flag) {
                     backAction();
+<<<<<<< HEAD
                     break;
                 }
                 launchDefaultSearch();
@@ -2144,6 +2271,70 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             return applicationName;
         }
 
+=======
+                }
+                launchDefaultSearch();
+                return;
+
+            } else if (packageName.equals(StylusGestureFilter.ACTION_NOTIFICATIONS)) {
+
+                IStatusBarService mStatusBarService = IStatusBarService.Stub
+                        .asInterface(ServiceManager.getService("statusbar"));
+                try {
+                    mStatusBarService.toggleNotificationShade();
+                } catch (RemoteException e) {
+                }
+                return;
+
+
+            } else if (packageName.equals(StylusGestureFilter.ACTION_IME)) {
+
+                getContext().sendBroadcast(new Intent("android.settings.SHOW_INPUT_METHOD_PICKER"));
+                return;
+
+            } else {  // we must have a custom uri
+                // Custom action on notificationbar / systemui will be converted
+                // to back action
+                if (flag) {
+                    backAction();
+                }
+                 try {
+                     Intent intent = Intent.parseUri(packageName, 0);
+                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                     getContext().startActivity(intent);
+                 } catch (URISyntaxException e) {
+                     Log.e(TAG, "URISyntaxException: [" + packageName + "]");
+                 } catch (ActivityNotFoundException e){
+                     Log.e(TAG, "ActivityNotFound: [" + packageName + "]");
+                 }
+            }
+            return;
+        }
+
+
+
+
+        private void menuAction() {
+            dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,
+                    KeyEvent.KEYCODE_MENU));
+            dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,
+                    KeyEvent.KEYCODE_MENU));
+
+        }
+
+        private void backAction() {
+            dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,
+                    KeyEvent.KEYCODE_BACK));
+            dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,
+                    KeyEvent.KEYCODE_BACK));
+        }
+
+        private Handler mHandler = new Handler() {
+            public void handleMessage(Message msg) {
+            }
+        };
+
+>>>>>>> 0066979... Spen Options 1/2: Enable Spen options
         @Override
         public boolean dispatchTouchEvent(MotionEvent ev) {
             // Stylus events with side button pressed are filtered and other
@@ -2154,8 +2345,8 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                 return false;
             }
             final Callback cb = getCallback();
-            return cb != null && !isDestroyed() && mFeatureId < 0 ? cb.dispatchTouchEvent(ev)
-                    : super.dispatchTouchEvent(ev);
+            return cb != null && !isDestroyed() && mFeatureId < 0 ? cb
+                    .dispatchTouchEvent(ev) : super.dispatchTouchEvent(ev);
         }
 
         @Override

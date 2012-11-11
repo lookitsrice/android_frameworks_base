@@ -1809,6 +1809,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         private Handler mConfigHandler;
         private boolean mEnableGestures;
         private StylusReceiver mSPenReceiver;
+
         public DecorView(Context context, int featureId) {
             super(context);
             mFeatureId = featureId;
@@ -2771,6 +2772,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             
             gestureObserver.observe();
             mSPenReceiver.register();
+
             final Callback cb = getCallback();
             if (cb != null && !isDestroyed() && mFeatureId < 0) {
                 cb.onAttachedToWindow();
@@ -2794,6 +2796,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             
             gestureObserver.unobserve();
             mSPenReceiver.unregister();
+
             final Callback cb = getCallback();
             if (cb != null && mFeatureId < 0) {
                 cb.onDetachedFromWindow();

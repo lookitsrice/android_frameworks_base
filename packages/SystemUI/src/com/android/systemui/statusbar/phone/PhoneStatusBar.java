@@ -1530,16 +1530,6 @@ public class PhoneStatusBar extends BaseStatusBar {
                 mTicker.halt();
             }
         }
-
-        setSettingsVisibility();
-    }
-
-    private void setSettingsVisibility() {
-        boolean showSettings = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_SHOW_SETTINGS, 1) == 1;
-        int visibility = showSettings ? View.VISIBLE : View.GONE;
-
-        mSettingsButton.setVisibility(visibility);
     }
 
     @Override

@@ -125,13 +125,13 @@
     <dimen name="navbar_search_up_threshhold">40dip</dimen>
 
     <!-- Height of search panel including navigation bar height -->
-    <dimen name="navbar_search_panel_height">230dip</dimen>
+    <dimen name="navbar_search_panel_height">170dip</dimen>
 
     <!-- Height of the draggable handle at the bottom of the phone notification panel -->
-    <dimen name="close_handle_height">32dp</dimen>
+    <dimen name="close_handle_height">45dp</dimen>
 
     <!-- Amount of close_handle that will not overlap the notification list -->
-    <dimen name="close_handle_underlap">18dp</dimen>
+    <dimen name="close_handle_underlap">40dp</dimen>
 
     <!-- Height of the notification panel header bar -->
     <dimen name="notification_panel_header_height">48dp</dimen>
@@ -140,7 +140,7 @@
     <dimen name="notification_panel_widget_height">48dp</dimen>
 
     <!-- Height of the notification panel header and widget -->
-    <dimen name="notification_panel_header_and_widget">96dp</dimen>
+    <dimen name="notification_panel_header_and_widget">48dp</dimen>
 
     <!-- Extra space above the panel -->
     <dimen name="notification_panel_padding_top">0dp</dimen>
@@ -183,7 +183,7 @@
     <dimen name="panel_float">56dp</dimen>
 
     <!-- Width of recents panel -->
-    <dimen name="status_bar_recents_width">446dp</dimen>
+    <dimen name="status_bar_recents_width">450dp</dimen>
     <!-- Padding for text descriptions -->
     <dimen name="status_bar_recents_text_description_padding">8dp</dimen>
     <!-- Width of application label text -->

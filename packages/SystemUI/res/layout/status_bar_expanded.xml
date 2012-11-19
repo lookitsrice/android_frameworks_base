@@ -127,25 +127,26 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-	     <com.android.systemui.statusbar.powerwidget.PowerWidget
-        	android:id="@+id/exp_power_stat"
-                android:layout_width="match_parent"
-           	android:layout_height="@dimen/notification_panel_widget_height"
-          	android:layout_gravity="bottom"
-            	android:layout_marginBottom="32.0dip"
-	    	/>
      <com.android.systemui.statusbar.phone.CloseDragHandle android:id="@+id/close"
         android:layout_width="match_parent"
         android:layout_height="@dimen/close_handle_height"
         android:layout_gravity="bottom"
         android:orientation="vertical"
-        >
+	>
+        <com.android.systemui.statusbar.powerwidget.PowerWidget
+            android:id="@+id/exp_power_stat"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/notification_panel_widget_height"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="32.0dip"
+            />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/close_handle_height"
             android:layout_gravity="bottom"
             android:scaleType="fitXY"
             android:src="@drawable/status_bar_close"
+            android:layout_marginBottom="50.0dip"
             />
     </com.android.systemui.statusbar.phone.CloseDragHandle>
 </FrameLayout><!-- end of sliding panel -->

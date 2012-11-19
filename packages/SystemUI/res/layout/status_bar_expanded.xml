@@ -133,6 +133,7 @@
            	android:layout_height="@dimen/notification_panel_widget_height"
           	android:layout_gravity="bottom"
             	android:layout_marginBottom="32.0dip"
+	    	android:background="#ff000000"
 	    	/>
      <com.android.systemui.statusbar.phone.CloseDragHandle android:id="@+id/close"
         android:layout_width="match_parent"

@@ -90,12 +90,6 @@
             android:layout_height="@dimen/notification_panel_header_height"
             />
 
-        <com.android.systemui.statusbar.powerwidget.PowerWidget
-            android:id="@+id/exp_power_stat"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/notification_panel_widget_height"
-            />
-
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
@@ -108,15 +102,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
                 <include
+                    layout="@layout/weatherpanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <include
                     layout="@layout/quick_toggles"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp" />
-	       	<include
-	            layout="@layout/weatherpanel"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/emergency_calls_only"
                     android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Network.EmergencyOnly"
@@ -133,8 +127,15 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
-    <com.android.systemui.statusbar.phone.CloseDragHandle android:id="@+id/close"
+	     <com.android.systemui.statusbar.powerwidget.PowerWidget
+        	android:id="@+id/exp_power_stat"
+                android:layout_width="match_parent"
+           	android:layout_height="@dimen/notification_panel_widget_height"
+          	android:layout_gravity="bottom"
+            	android:layout_marginBottom="32.0dip"
+	    	android:background="#ff000000"
+	    	/>
+     <com.android.systemui.statusbar.phone.CloseDragHandle android:id="@+id/close"
         android:layout_width="match_parent"
         android:layout_height="@dimen/close_handle_height"
         android:layout_gravity="bottom"
@@ -147,6 +148,5 @@
             android:scaleType="fitXY"
             android:src="@drawable/status_bar_close"
             />
-
     </com.android.systemui.statusbar.phone.CloseDragHandle>
 </FrameLayout><!-- end of sliding panel -->

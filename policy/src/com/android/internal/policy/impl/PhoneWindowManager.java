@@ -448,7 +448,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mOrientationSensorEnabled = false;
     int mCurrentAppOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
     boolean mHasSoftInput = false;
-<<<<<<< HEAD
     int mBackKillTimeout;
     int mDeviceHardwareKeys;
     boolean mHasHomeKey;
@@ -470,15 +469,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             super(inputChannel, looper);
             mView = view;
         }
-=======
-    boolean mCameraKeyPressable = false;
-    static final long NEXT_DURATION = 400;
-    private boolean mBottomBar;
-    int mPointerLocationMode = 0;
-    PointerLocationView mPointerLocationView = null;
-    InputChannel mPointerLocationInputChannel;
-    int mBackKillTimeout;
->>>>>>> 802bf9e... Customizable kill app via back key timeout
 
         @Override
         public void onInputEvent(InputEvent event) {
@@ -1223,7 +1213,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.integer.config_lidKeyboardAccessibility);
         mLidNavigationAccessibility = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_lidNavigationAccessibility);
-<<<<<<< HEAD
         mLidControlsSleep = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_lidControlsSleep);
         mHasRemovableLid = mContext.getResources().getBoolean(
@@ -1236,10 +1225,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mHasMenuKey = ((mDeviceHardwareKeys & KEY_MASK_MENU) != 0);
         mHasAssistKey = ((mDeviceHardwareKeys & KEY_MASK_ASSIST) != 0);
         mHasAppSwitchKey = ((mDeviceHardwareKeys & KEY_MASK_APP_SWITCH) != 0);
-=======
-        mBackKillTimeout = mContext.getResources().getInteger(
-                com.android.internal.R.integer.config_backKillTimeout);
->>>>>>> 802bf9e... Customizable kill app via back key timeout
         // register for dock events
         IntentFilter filter = new IntentFilter();
         filter.addAction(UiModeManager.ACTION_ENTER_CAR_MODE);
@@ -2567,15 +2552,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         mHomeLongPressed = true;
                     }
                 }
-<<<<<<< HEAD
-=======
-                mHomePressed = true;
-            }
-            return true;
-        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (down && repeatCount == 0) {
-                mHandler.postDelayed(mBackLongPress, mBackKillTimeout);
->>>>>>> 802bf9e... Customizable kill app via back key timeout
             }
             return -1;
         } else if (keyCode == KeyEvent.KEYCODE_MENU) {

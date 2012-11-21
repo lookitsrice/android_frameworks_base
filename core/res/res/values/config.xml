@@ -971,7 +971,6 @@
     <!-- True if the Sym key should open the InputMethodPicker (default) -->
     <bool name="config_symKeyShowsImePicker">true</bool>
 
-<<<<<<< HEAD
     <!-- Boolean to enable Stylus gestures -->
     <bool name="config_stylusGestures">false</bool>
 
@@ -980,9 +979,4 @@
 
     <!-- Boolean to enable Stylus has switch -->
     <bool name="config_stylusSwitch">false</bool>
-=======
-    <!-- Timeout in MS for how long you have to long-press the back key to kill the foreground app. -->
-    <integer name="config_backKillTimeout">2000</integer>
-
->>>>>>> 802bf9e... Customizable kill app via back key timeout
 </resources>

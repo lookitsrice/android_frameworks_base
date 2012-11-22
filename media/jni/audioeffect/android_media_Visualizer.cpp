@@ -380,6 +380,8 @@ setup_failure:
     env->SetIntField(thiz, fields.fidNativeVisualizer, 0);
 
     if (lpJniStorage) {
+        env->DeleteGlobalRef(lpJniStorage->mCallbackData.visualizer_class);
+        env->DeleteGlobalRef(lpJniStorage->mCallbackData.visualizer_ref);
         delete lpJniStorage;
     }
     env->SetIntField(thiz, fields.fidJniData, 0);
@@ -395,6 +397,8 @@ static void android_media_visualizer_native_finalize(JNIEnv *env,  jobject thiz)
     Visualizer* lpVisualizer = (Visualizer *)env->GetIntField(
         thiz, fields.fidNativeVisualizer);
     if (lpVisualizer) {
+        env->DeleteGlobalRef(lpJniStorage->mCallbackData.visualizer_class);
+        env->DeleteGlobalRef(lpJniStorage->mCallbackData.visualizer_ref);
         ALOGV("deleting Visualizer: %x\n", (int)lpVisualizer);
         delete lpVisualizer;
     }

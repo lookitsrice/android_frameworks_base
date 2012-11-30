@@ -108,9 +108,8 @@ public class NotificationManagerService extends INotificationManager.Stub
     private static final int LONG_DELAY = 3500; // 3.5 seconds
     private static final int SHORT_DELAY = 2000; // 2 seconds
 
-    private static final long[] DEFAULT_VIBRATE_PATTERN = {
-            0, 250, 250, 250
-    };
+    private static final long[] DEFAULT_VIBRATE_PATTERN = {0, 250, 250, 250};
+    private static final int VIBRATE_PATTERN_MAXLEN = 8 * 2 + 1; // up to eight bumps
 
     private static final int DEFAULT_STREAM_TYPE = AudioManager.STREAM_NOTIFICATION;
     private static final boolean SCORE_ONGOING_HIGHER = false;
@@ -136,6 +135,9 @@ public class NotificationManagerService extends INotificationManager.Stub
     private int mDefaultNotificationColor;
     private int mDefaultNotificationLedOn;
     private int mDefaultNotificationLedOff;
+
+    private long[] mDefaultVibrationPattern;
+    private long[] mFallbackVibrationPattern;
 
     private boolean mSystemReady;
     private int mDisabledNotifications;
@@ -703,6 +705,19 @@ public class NotificationManagerService extends INotificationManager.Stub
         }
     }
 
+    static long[] getLongArray(Resources r, int resid, int maxlen, long[] def) {
+        int[] ar = r.getIntArray(resid);
+        if (ar == null) {
+            return def;
+        }
+        final int len = ar.length > maxlen ? maxlen : ar.length;
+        long[] out = new long[len];
+        for (int i=0; i<len; i++) {
+            out[i] = ar[i];
+        }
+        return out;
+    }
+
     class QuietHoursSettingsObserver extends ContentObserver {
         QuietHoursSettingsObserver(Handler handler) {
             super(handler);
@@ -787,6 +802,24 @@ public class NotificationManagerService extends INotificationManager.Stub
             String[] map = mapping.split("\\|");
             mPackageNameMappings.put(map[0], map[1]);
         }
+
+        Resources resources = mContext.getResources();
+        mDefaultNotificationColor = resources.getColor(
+                com.android.internal.R.color.config_defaultNotificationColor);
+        mDefaultNotificationLedOn = resources.getInteger(
+                com.android.internal.R.integer.config_defaultNotificationLedOn);
+        mDefaultNotificationLedOff = resources.getInteger(
+                com.android.internal.R.integer.config_defaultNotificationLedOff);
+
+        mDefaultVibrationPattern = getLongArray(resources,
+                com.android.internal.R.array.config_defaultNotificationVibePattern,
+                VIBRATE_PATTERN_MAXLEN,
+                DEFAULT_VIBRATE_PATTERN);
+
+        mFallbackVibrationPattern = getLongArray(resources,
+                com.android.internal.R.array.config_notificationFallbackVibePattern,
+                VIBRATE_PATTERN_MAXLEN,
+                DEFAULT_VIBRATE_PATTERN);
 
         // Don't start allowing notifications until the setup wizard has run once.
         // After that, including subsequent boots, init with notifications turned on.

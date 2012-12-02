@@ -417,21 +417,28 @@ public class Environment {
     /**
      * {@link #getExternalStorageState()} returns MEDIA_UNMOUNTABLE if the media is present
      * but cannot be mounted.  Typically this happens if the file system on the
-     * media is corrupted. 
+     * media is corrupted.
      */
     public static final String MEDIA_UNMOUNTABLE = "unmountable";
 
     /**
      * Gets the current state of the primary "external" storage device.
-     * 
+     *
      * <p>See {@link #getExternalStorageDirectory()} for more information.
      */
     public static String getExternalStorageState() {
+       return getExternalStorageState(getExternalStorageDirectory().toString());
+    }
+
+    /**
+     * Gets the current state of the specified "external" storage device.
+     * @hide
+     */
+    public static String getExternalStorageState(String path) {
         try {
             IMountService mountService = IMountService.Stub.asInterface(ServiceManager
                     .getService("mount"));
-            return mountService.getVolumeState(getExternalStorageDirectory()
-                    .toString());
+            return mountService.getVolumeState(path);
         } catch (Exception rex) {
             return Environment.MEDIA_REMOVED;
         }
